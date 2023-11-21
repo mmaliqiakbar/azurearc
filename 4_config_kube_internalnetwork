@@ -1,0 +1,9 @@
+#### A CNI plugin is responsible for inserting a network interface into the container network namespace (e.g., one end of a virtual ethernet (veth) pair) 
+#### and making any necessary changes on the host (e.g., attaching the other end of the veth into a bridge).
+#### We are going to use Weave Net CNI plugin https://kubernetes.io/docs/concepts/cluster-administration/addons/
+kubectl apply -f "https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s-1.11.yaml"
+
+
+#### verify kube nodes
+kubectl get all -A
+kubectl get nodes
