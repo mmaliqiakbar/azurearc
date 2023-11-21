@@ -1,0 +1,39 @@
+#### Update the apt package index and upgrade all packages
+sudo apt-get update
+sudo apt upgrade
+
+
+#### Disable firewall and remove the swap entry from the fstab file.
+#### ref: why swap should be switched off https://discuss.kubernetes.io/t/swap-off-why-is-it-necessary/6879
+sudo ufw disable
+swapoff -a
+sudo sed -i '/swap/d' /etc/fstab
+
+
+#### Set kernel parameters for kube internal networks:
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-iptables  = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward                 = 1
+EOF
+sudo sysctl --system
+
+
+#### install components needed
+sudo apt install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+
+
+#### go to root user and install docker to run kubernetes cluster
+sudo su
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+apt update
+apt install docker.io
+
+#### install kubernetes
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add 
+echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
+apt update
+apt-get install -y kubelet kubeadm kubectl
+
+#### RUN ALL STEPS ABOVE IN CONTROL PLAN and WORKER NODE
