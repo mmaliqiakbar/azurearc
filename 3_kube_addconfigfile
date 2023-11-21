@@ -1,0 +1,24 @@
+#### after running step 2, continue with this in control plane
+ip addr
+#### get IPv4 from eth0 my sample would be like this
+eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:0d:3a:99:27:29 brd ff:ff:ff:ff:ff:ff
+    inet 10.1.0.4/24 brd 10.1.0.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::20d:3aff:fe99:2729/64 scope link
+       valid_lft forever preferred_lft forever
+####
+kubeadm init --apiserver-advertise-address=<paste-the-apiserver-advertise-address-ip> --pod-network-cidr=192.168.0.0/16  --ignore-preflight-errors=all
+#### after change with correct ip address
+kubeadm init --apiserver-advertise-address=10.1.0.4 --pod-network-cidr=192.168.0.0/16  --ignore-preflight-errors=all 
+
+### run in control plane node with admin user
+export KUBECONFIG=/etc/kubernetes/admin.conf
+
+#### this config file will be used by user non admin
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+#### run this to get command to be ran in worker node
+kubeadm token create --print-join-command
