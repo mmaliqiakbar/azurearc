@@ -9,3 +9,10 @@ export AZDATA_METRICSUI_PASSWORD=Ku8emet.123
 
 #### setup az cli to connect to azure environment
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+### make sure to login before installing arc data controller in your kube
+az login --scope https://management.core.windows.net//.default
+
+#### deploy arc data controller
+az arcdata dc create --profile-name azure-arc-aks-premium-storage --k8s-namespace "kube-system" --name arcdatacontroller --subscription "yoursubscriptionaz" --resource-group "yourresourcegroup" --location "eastus2" --connectivity-mode indirect --use-k8s
+
