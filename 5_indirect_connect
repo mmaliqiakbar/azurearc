@@ -5,3 +5,7 @@ export AZDATA_LOGSUI_USERNAME=kubeloguser
 export AZDATA_LOGSUI_PASSWORD=Ku8elog.123
 export AZDATA_METRICSUI_USERNAME=kubemetuser
 export AZDATA_METRICSUI_PASSWORD=Ku8emet.123
+
+
+#### setup az cli to connect to azure environment
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
