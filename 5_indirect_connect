@@ -1,0 +1,7 @@
+#### we are going to use indirect connection to azure arc based on this document https://learn.microsoft.com/en-us/azure/azure-arc/data/create-complete-managed-instance-indirectly-connected?tabs=linux
+####
+
+export AZDATA_LOGSUI_USERNAME=kubeloguser
+export AZDATA_LOGSUI_PASSWORD=Ku8elog.123
+export AZDATA_METRICSUI_USERNAME=kubemetuser
+export AZDATA_METRICSUI_PASSWORD=Ku8emet.123
